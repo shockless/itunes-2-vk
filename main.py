@@ -32,8 +32,8 @@ def download(path, logs_path, playlist, vk):
                 write_name = write_name.replace('/', " ")
                 write_name = write_name.replace('?', " ")
                 name = 'NONE'
-                path = os.path.join(path, write_name + '.mp3')
-                if not os.path.exists(path):
+                audio_path = os.path.join(path, write_name + '.mp3')
+                if not os.path.exists(audio_path):
                     json = vk.method("audio.search", {"q": real_name, 'count': 1})
                     if json['count'] != 0:
                         audio_with_url = vk.method("audio.getById",
@@ -45,7 +45,8 @@ def download(path, logs_path, playlist, vk):
                         name = name.replace('/', " ")
                         name = name.replace('?', " ")
                         if audio_with_url[0]['url'] != '':
-                            f = open(path, "wb")
+                            print(audio_path)
+                            f = open(audio_path, "wb")
                             print(str(index + 1) + '/' + str(playlist_len), name, 'File:', write_name)
                             ufr = requests.get(url)
                             f.write(ufr.content)
@@ -79,20 +80,21 @@ if __name__ == "__main__":
     parser.add_argument('--playlist', type=str, help='iTunes playlist txt path')
     arguments = parser.parse_args()
 
-    PATH = arguments.audio
-    LOGS_PATH = arguments.logs
-
-    PLAYLIST = arguments.playlist
-
-    if not os.path.exists(PATH):
-        os.mkdir(PATH)
-
-    if not os.path.exists(LOGS_PATH):
-        os.mkdir(LOGS_PATH)
-
     if arguments.login and arguments.password and arguments.playlist:
+
+        PLAYLIST = arguments.playlist
+        PATH = os.path.join(arguments.audio, os.path.splitext(os.path.split(PLAYLIST)[-1])[-2])
+        LOGS_PATH = arguments.logs
+
+        if not os.path.exists(PATH):
+            os.mkdir(PATH)
+
+        if not os.path.exists(LOGS_PATH):
+            os.mkdir(LOGS_PATH)
+
         LOGIN = arguments.login
         PASS = arguments.password
         VK = vk_api.VkApi(login=LOGIN, password=PASS, app_id=6121396, auth_handler=TwoFactor)
         VK.auth(token_only=True)
+        print(PATH)
         download(PATH, LOGS_PATH, PLAYLIST, VK)
