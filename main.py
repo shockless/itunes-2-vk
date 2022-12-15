@@ -45,7 +45,6 @@ def download(path, logs_path, playlist, vk):
                         name = name.replace('/', " ")
                         name = name.replace('?', " ")
                         if audio_with_url[0]['url'] != '':
-                            print(audio_path)
                             f = open(audio_path, "wb")
                             print(str(index + 1) + '/' + str(playlist_len), name, 'File:', write_name)
                             ufr = requests.get(url)
@@ -96,5 +95,5 @@ if __name__ == "__main__":
         PASS = arguments.password
         VK = vk_api.VkApi(login=LOGIN, password=PASS, app_id=6121396, auth_handler=TwoFactor)
         VK.auth(token_only=True)
-        print(PATH)
+        print("SAVING TO",PATH)
         download(PATH, LOGS_PATH, PLAYLIST, VK)
