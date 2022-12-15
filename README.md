@@ -3,7 +3,7 @@
 ## Run downloader
 ```bash
 pip install -r requirements.txt
-python main.py --login VK_PHONE_NUMBER --password VK_PASSWORD --playlist PATH\TO\Playlist.txt
+python itunes2vk.py --login VK_PHONE_NUMBER --password VK_PASSWORD --playlist PATH\TO\Playlist.txt
 ```
 
 ### Optional arguments:
