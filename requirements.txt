@@ -1,0 +1,3 @@
+pandas
+vk_api
+requests
