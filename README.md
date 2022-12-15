@@ -7,8 +7,8 @@ python itunes2vk.py --login VK_PHONE_NUMBER --password VK_PASSWORD --playlist PA
 ```
 
 ### Optional arguments:
-- --audio PATH\TO\AUDIO_FOLDER\ (default: .\audio)
-- --logs PATH\TO\LOGS_FOLDER\ (default: .\logs)
+- ```--audio PATH\TO\AUDIO_FOLDER\ (default: .\audio)```
+- ```--logs PATH\TO\LOGS_FOLDER\ (default: .\logs)```
 
 ### Audiofiles save to PATH\TO\AUDIO_FOLDER\Playlist 
 - 'PATH\TO\AUDIO_FOLDER\' is your --audio folder 
