@@ -82,8 +82,11 @@ if __name__ == "__main__":
     if arguments.login and arguments.password and arguments.playlist:
 
         PLAYLIST = arguments.playlist
+        ROOT_PATH = '.\\iTunes2VK'
         PATH = os.path.join(arguments.audio, os.path.splitext(os.path.split(PLAYLIST)[-1])[-2])
         LOGS_PATH = arguments.logs
+        PATH = os.path.join(ROOT_PATH, PATH)
+        LOGS_PATH = os.path.join(ROOT_PATH, LOGS_PATH)
 
         if not os.path.exists(PATH):
             os.mkdir(PATH)
@@ -95,5 +98,5 @@ if __name__ == "__main__":
         PASS = arguments.password
         VK = vk_api.VkApi(login=LOGIN, password=PASS, app_id=6121396, auth_handler=TwoFactor)
         VK.auth(token_only=True)
-        print("SAVING TO",PATH)
+        print("SAVING TO", PATH)
         download(PATH, LOGS_PATH, PLAYLIST, VK)
