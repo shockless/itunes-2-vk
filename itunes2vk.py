@@ -31,6 +31,7 @@ def download(path, logs_path, playlist, vk):
                 write_name = bytes(real_name, 'utf-8').decode('utf-8', 'ignore')
                 write_name = write_name.replace('/', " ")
                 write_name = write_name.replace('?', " ")
+                write_name = write_name.replace(':', " ")
                 name = 'NONE'
                 audio_path = os.path.join(path, write_name + '.mp3')
                 if not os.path.exists(audio_path):
@@ -86,8 +87,8 @@ if __name__ == "__main__":
         AUDIO_PATH = '\\audio'
         LOGS_PATH = '\\logs'
 
-        AUDIO_PATH = os.path.join(ROOT_PATH, AUDIO_PATH)
-        LOGS_PATH = os.path.join(ROOT_PATH, LOGS_PATH)
+        AUDIO_PATH = ROOT_PATH+AUDIO_PATH
+        LOGS_PATH = ROOT_PATH+LOGS_PATH
 
         if not os.path.exists(ROOT_PATH):
             os.mkdir(ROOT_PATH)
