@@ -87,6 +87,9 @@ if __name__ == "__main__":
         PATH = os.path.join(ROOT_PATH, PATH)
         LOGS_PATH = os.path.join(ROOT_PATH, LOGS_PATH)
 
+        if not os.path.exists(ROOT_PATH):
+            os.mkdir(ROOT_PATH)
+
         if not os.path.exists(PATH):
             os.mkdir(PATH)
 
