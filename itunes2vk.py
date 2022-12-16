@@ -82,14 +82,13 @@ if __name__ == "__main__":
 
         PLAYLIST = arguments.playlist
         ROOT_PATH = arguments.path
-        PATH = os.path.join('.\\audio', os.path.splitext(os.path.split(PLAYLIST)[-1])[-2])
-        LOGS_PATH = '.\\logs'
+        PATH = os.path.join('\\audio', os.path.splitext(os.path.split(PLAYLIST)[-1])[-2])
+        LOGS_PATH = '\\logs'
         PATH = os.path.join(ROOT_PATH, PATH)
         LOGS_PATH = os.path.join(ROOT_PATH, LOGS_PATH)
 
         if not os.path.exists(ROOT_PATH):
             os.mkdir(ROOT_PATH)
-
         if not os.path.exists(PATH):
             os.mkdir(PATH)
 
