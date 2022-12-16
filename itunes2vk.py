@@ -72,8 +72,7 @@ def download(path, logs_path, playlist, vk):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Convert txt to MP3')
-    parser.add_argument('--audio', default='.\\audio', type=str, help='Path to save audio')
-    parser.add_argument('--logs', default='.\\logs', type=str, help='Path to save logs')
+    parser.add_argument('--path', default='.\\iTunes2VK', type=str, help='Path to save files to')
     parser.add_argument('--login', type=str, help='VK login')
     parser.add_argument('--password', type=str, help='VK password')
     parser.add_argument('--playlist', type=str, help='iTunes playlist txt path')
@@ -82,9 +81,9 @@ if __name__ == "__main__":
     if arguments.login and arguments.password and arguments.playlist:
 
         PLAYLIST = arguments.playlist
-        ROOT_PATH = '.\\iTunes2VK'
-        PATH = os.path.join(arguments.audio, os.path.splitext(os.path.split(PLAYLIST)[-1])[-2])
-        LOGS_PATH = arguments.logs
+        ROOT_PATH = arguments.path
+        PATH = os.path.join('.\\audio', os.path.splitext(os.path.split(PLAYLIST)[-1])[-2])
+        LOGS_PATH = '.\\logs'
         PATH = os.path.join(ROOT_PATH, PATH)
         LOGS_PATH = os.path.join(ROOT_PATH, LOGS_PATH)
 
