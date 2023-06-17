@@ -3,8 +3,9 @@
 ## Run downloader
 ```bash
 pip install -r requirements.txt
-python itunes2vk.py --login VK_PHONE_NUMBER --password VK_PASSWORD --playlist PATH\TO\Playlist.txt
+python itunes2vk.py  --playlist PATH\TO\Playlist.txt --mode it
 ```
+- ```--mode it\spot\rb are respectively Itunes\Spotify (via external services)\RekordBox xml files
 
 ### Optional arguments:
 - ```--path PATH\TO\SAVE\ (default: .\iTunes2VK\)```
