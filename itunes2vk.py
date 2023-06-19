@@ -1,6 +1,8 @@
 import argparse
 import os
 import random
+import re
+
 import requests
 
 import xmltodict
@@ -10,6 +12,7 @@ from time import gmtime, strftime, sleep
 import vk_api
 from tqdm import tqdm
 
+import renaming
 
 
 def xml(path):
@@ -17,7 +20,10 @@ def xml(path):
     xmlDict = xmltodict.parse(xml_data)['DJ_PLAYLISTS']['COLLECTION']['TRACK']
     df = pd.DataFrame(columns=['Name', 'Artist'])
     for i, track in tqdm(enumerate(xmlDict), total=len(xmlDict), desc="Converting to DF"):
+        track['@Name'] = re.sub(r"[^ \-.,&\'()!\[\]\w+]", '', track['@Name'])
+        track['@Artist'] = re.sub(r"[^ \-.,&\'()!\[\]\w+]", '', track['@Artist'])
         df.loc[i] = [track['@Name'], track['@Artist']]
+
     return df
 
 
@@ -29,6 +35,8 @@ def captcha_handler(captcha):
 def download(path, logs_path, playlist, vk, source=2):
     errors_path = 'errors'
     success_path = 'success'
+    errors_count = 0
+    success_count = 0
     if source == 0:
         with open(playlist, encoding='UTF-16') as f:
             df = pd.read_csv(f, sep="\t", header=0)
@@ -78,18 +86,21 @@ def download(path, logs_path, playlist, vk, source=2):
                                   "File:", write_name,
                                   end='\n',
                                   file=f_s)
+                            success_count+=1
                         else:
                             print(str(index + 1) + '/' + str(playlist_len),
                                   "!!! NOT FOUND:", name,
                                   "Real:", real_name,
                                   end='\n',
                                   file=f_e)
+                            errors_count+=1
                     else:
                         print(str(index + 1) + '/' + str(playlist_len),
                               "Found:", name,
                               "Real:", real_name,
                               end='\n',
                               file=f_e)
+                        errors_count+=1
                     sleep(random.uniform(1, 2.5))
                 else:
                     print('EXISTS', str(index + 1) + '/' + str(playlist_len), write_name)
@@ -99,6 +110,9 @@ def download(path, logs_path, playlist, vk, source=2):
                           "File:", write_name,
                           end='\n',
                           file=f_s)
+                    success_count+=1
+    print(f"DOWNLOADING IS DONE\nsuccess:{success_count} | errors:{errors_count}")
+    renaming.rename_tags(path, f_s)
     print("DONE")
 
 
