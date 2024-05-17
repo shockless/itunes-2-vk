@@ -16,9 +16,13 @@ def get_id(result, stype):
     if len(id_obj) > 0 and 'id' in id_obj[0]:
         return id_obj[0]['id']
     else:
-        if 'id' not in id_obj[0]:
-            print(id_obj[0], stype)
         return None
+
+
+type2dict = {'Album': 'albums',
+             'Artist': 'artists',
+             'Favorite': 'tracks',
+             'Playlist': 'playlists'}
 
 
 @click.command()
@@ -29,7 +33,6 @@ def get_id(result, stype):
 def main(api_key, library):
     client = Client(api_key).init()
     library_df = pd.read_csv(library)
-    type2dict = {'Album': 'albums', 'Artist': 'artists', 'Favorite': 'tracks', 'Playlist': 'playlists'}
 
     user_playlists = client.users_playlists_list()
     playlists = {playlist.title: playlist.kind for playlist in user_playlists}
@@ -38,7 +41,6 @@ def main(api_key, library):
         name, artist, album, playlist, stype, _ = row
         if pd.isna(artist) and stype != 'Artist':
             continue
-
         elif stype == 'Artist':
             search_query = ' - '.join([name])
         else:
@@ -64,8 +66,11 @@ def main(api_key, library):
                 playlist_obj = client.users_playlists_create(playlist)
                 playlists[playlist] = playlist_obj.kind
             album_id = client.tracks(result_id)[0]['albums'][0]['id']
-            print("Not Supported")
-            # client.users_playlists_insert_track(playlists[playlist], result_id, album_id, revision=2)
+            revision = client.users_playlists(playlists[playlist]).revision
+            client.users_playlists_insert_track(kind=playlists[playlist],
+                                                track_id=result_id,
+                                                album_id=album_id,
+                                                revision=revision)
         else:
             eval(f'client.users_likes_{stype}_add')(result_id)
 
