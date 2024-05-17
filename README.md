@@ -14,3 +14,9 @@ python itunes2vk.py  --playlist PATH\TO\Playlist.txt --mode it
 - 'PATH\TO\SAVE\' is your --path folder 
 - 'Playlist' is your playlist's name
 ### Logs save to PATH\TO\SAVE\logs\
+
+
+TODO:
+1. Restructurize the code (OOP approach)
+2. Use click as args handler
+3. Enable to login via apple and spotify
